@@ -16,38 +16,31 @@ whitespace [ \t\n\r]
 
 %%
 
-{whitespace}+			{printf(yytext);}
-{digit}+				{printf("%s(INTEGER_NUM)", yytext); strcpy(yylval.str, yytext); return INTEGER_NUM;}
-{digit}+"."{digit}+		{printf("%s(DOUBLE_NUM)", yytext); strcpy(yylval.str, yytext); return DOUBLE_NUM;}
-[(){}]					{printf("%s(other)", yytext); return *yytext;}	
+{whitespace}+			{;}
+{digit}+				{strcpy(yylval.str, yytext); return INTEGER_NUM;}
+{digit}+"."{digit}+		{strcpy(yylval.str, yytext); return DOUBLE_NUM;}
+[+-/*%=,;(){}]			{return *yytext;}	
 
-"+"			{printf("%s(Add)", yytext); strcpy(yylval.str, yytext); return *yytext;}
-"-"			{printf("%s(Sub)", yytext); strcpy(yylval.str, yytext); return *yytext;}
-"*"			{printf("%s(Mul)", yytext); strcpy(yylval.str, yytext); return *yytext;}
-"/"			{printf("%s(Div)", yytext); strcpy(yylval.str, yytext); return *yytext;}
-"%"			{printf("%s(Mod)", yytext); strcpy(yylval.str, yytext); return *yytext;}
-"="			{printf("%s(Assign)", yytext); strcpy(yylval.str, yytext); return *yytext;}
-","			{printf("%s(Comma)", yytext); strcpy(yylval.str, yytext); return *yytext;}
-";"			{printf("%s(SemiC)", yytext); strcpy(yylval.str, yytext); return *yytext;}
+"<"         {strcpy(yylval.str, yytext); return LT;}
+"<="        {strcpy(yylval.str, yytext); return LTE;}
+">"         {strcpy(yylval.str, yytext); return GT;}
+">="        {strcpy(yylval.str, yytext); return GTE;}
+"=="        {strcpy(yylval.str, yytext); return EQ;}
+"!="        {strcpy(yylval.str, yytext); return NEQ;}
+"&&"        {strcpy(yylval.str, yytext); return L_AND;}
+"||"		{strcpy(yylval.str, yytext); return L_OR;}
+"~"         {strcpy(yylval.str, yytext); return B_NOT;}
+"&"			{strcpy(yylval.str, yytext); return B_AND;}
+"|"			{strcpy(yylval.str, yytext); return B_OR;}
+"^"			{strcpy(yylval.str, yytext); return B_XOR;}
 
-"<"         {printf("%s(LT)", yytext); strcpy(yylval.str, yytext); return LT;}
-"<="        {printf("%s(LTE)", yytext); strcpy(yylval.str, yytext); return LTE;}
-">"         {printf("%s(GT)", yytext); strcpy(yylval.str, yytext); return GT;}
-">="        {printf("%s(GTE)", yytext); strcpy(yylval.str, yytext); return GTE;}
-"=="        {printf("%s(EQ)", yytext); strcpy(yylval.str, yytext); return EQ;}
-"!="        {printf("%s(NEQ)", yytext); strcpy(yylval.str, yytext); return NEQ;}
-"!"         {printf("%s(NOT)", yytext); strcpy(yylval.str, yytext); return NOT;}
-"&&"        {printf("%s(AND)", yytext); strcpy(yylval.str, yytext); return AND;}
-"||"        {printf("%s(OR)", yytext); strcpy(yylval.str, yytext); return OR;}
+"int"       {return INT;}
+"double"    {return DOUBLE;}
+"for"       {return FOR;}
+"while"     {return WHILE;}
+"if"        {return IF;}
 
-"int"       {printf("%s(INT)", yytext); return INT;}
-"double"    {printf("%s(DOUBLE)", yytext); return DOUBLE;}
-"for"       {printf("%s(FOR)", yytext); return FOR;}
-"while"     {printf("%s(WHILE)", yytext); return WHILE;}
-"if"        {printf("%s(IF)", yytext); return IF;}
-
-{letter}({letter}|{digit})*     {printf("%s(ID)", yytext); strcpy(yylval.str, yytext); return ID;}
-.                               {printf(yytext); yyerror("Invalid Command");}
-
+{letter}({letter}|{digit})*     {strcpy(yylval.str, yytext); return ID;}
+.                               { yyerror("Invalid Command");}
 
 %%

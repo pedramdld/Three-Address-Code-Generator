@@ -1,20 +1,15 @@
 {
+    int a, b = 10;
+    int c = 0;
 
+    while (a < b)
     {
-        int a;
-    }
-    int a, b, c;
-    double d = 2, f = 2, d = 2;
-
-    if (!a == -1 && a >= 1 || a != 2 && (a % 2) == 1)
-    {
+        c = c * 10;
+        a = a + 1;
     }
 
-    while (i > 3)
+    for (a = 0; a < b; a = a + 1)
     {
-        a = 3;
+        c = c * 10;
     }
-
-    for (i = 0; i <= 10; i = i + 1)
-        b = 1;
 }

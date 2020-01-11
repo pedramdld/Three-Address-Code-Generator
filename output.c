@@ -1,20 +1,39 @@
-{(other)
-
-    {(other)
-        int(INT) a(ID);(SemiC)
-    }(other)
-    int(INT) a(ID),(Comma) b(ID),(Comma) c(ID);(SemiC)
-    double(DOUBLE) d(ID) =(Assign) 2(INTEGER_NUM),(Comma) f(ID) =(Assign) 2(INTEGER_NUM),(Comma) d(ID) =(Assign) 2(INTEGER_NUM);(SemiC)
-
-    if(IF) ((other)!(NOT)a(ID) ==(EQ) -(Sub)1(INTEGER_NUM) &&(AND) a(ID) >=(GTE) 1(INTEGER_NUM) ||(OR) a(ID) !=(NEQ) 2(INTEGER_NUM) &&(AND) ((other)a(ID) %(Mod) 2(INTEGER_NUM))(other) ==(EQ) 1(INTEGER_NUM))(other)
-    {(other)
-    }(other)
-
-    while(WHILE) ((other)i(ID) >(GT) 3(INTEGER_NUM))(other)
-    {(other)
-        a(ID) =(Assign) 3(INTEGER_NUM);(SemiC)
-    }(other)
-
-    for(FOR) ((other)i(ID) =(Assign) 0(INTEGER_NUM);(SemiC) i(ID) <=(LTE) 10(INTEGER_NUM);(SemiC) i(ID) =(Assign) i(ID) +(Add) 1(INTEGER_NUM))(other)
-        b(ID) =(Assign) 1(INTEGER_NUM);(SemiC)
-}(other)
+{
+int a, b = 10;
+int c = 0;
+WHILE_BEGIN1:
+{
+int t1 = a < b;
+if (t1==false) goto WHILE_END1;
+{
+int t2 = c * 10;
+c = t2;
+int t3 = a + 1;
+a = t3;
+;
+}
+goto WHILE_BEGIN1;
+}
+WHILE_END1:
+FOR_BEGIN1:
+{
+a = 0;
+FOR_CONDITION1:
+int t4 = a < b;
+if(t4 == false) goto FOR_END1;
+goto FOR_CODE1;
+FOR_STEP1:
+int t5 = a + 1;
+a = t5;
+goto FOR_CONDITION1;
+FOR_CODE1:
+{
+int t6 = c * 10;
+c = t6;
+;
+}
+goto FOR_STEP1;
+}
+FOR_END1:
+;
+}
