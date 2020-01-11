@@ -74,11 +74,25 @@ Stmt:
 	|Expr ';'	{printf("");}
 
 
-	|IF '(' Expr ')' 
+	|IF
 	{
+		printf("IF_BEGIN%d:\n", $1=ifLableCounter++);
 		printf("{\n");
-		printf("if (%s==false) goto IF_END%d;\n", $3, $1);
-	} 
+	}
+	'(' 
+	{
+		printf("IF_CONDITION%d:\n", $1);
+		printf("{\n");
+	}
+	Expr ')' 
+	{
+		printf("if (%s==0) goto IF_END%d;\n", $5, $1);
+		printf("goto IF_CODE%d;\n", $1);
+		printf("}\n");
+	}
+	{
+		printf("IF_CODE%d:\n", $1);
+	}
 	Stmt	
 	{
 		printf("}\n");
@@ -91,13 +105,21 @@ Stmt:
 		printf("WHILE_BEGIN%d:\n", $1=whileLableCounter++);
 		printf("{\n");
 	}
-	'(' Expr ')'
+	'(' 
 	{
-		printf("if (%s==false) goto WHILE_END%d;\n", $4, $1);
+		printf("WHILE_CONDITION%d:\n", $1);
+		printf("{\n");
 	}
-	Stmt                    
+	Expr ')'
 	{
-		printf("goto WHILE_BEGIN%d;\n", $1);
+		printf("if (%s==0) goto WHILE_END%d;\n", $5, $1);
+		printf("goto WHILE_CODE%d;\n", $1);
+		printf("}\n");
+		printf("WHILE_CODE%d:\n", $1);
+	}
+	Stmt                   
+	{
+		printf("goto WHILE_CONDITION%d;\n", $1);
 		printf("}\n");
 		printf("WHILE_END%d:\n", $1);
 	}
@@ -111,19 +133,23 @@ Stmt:
 	'(' Expr ';' 
 	{
 		printf("FOR_CONDITION%d:\n", $1);
+		printf("{\n");
 	}
 	Expr 
 	{
-		printf("if(%s == false) goto FOR_END%d;\n", $7, $1);
+		printf("if(%s==0) goto FOR_END%d;\n", $7, $1);
 		printf("goto FOR_CODE%d;\n", $1);
+		printf("}\n");
 	}
 	';' 
 	{
 		printf("FOR_STEP%d:\n", $1);
+		printf("{\n");
 	}
 	Expr
 	{
 		printf("goto FOR_CONDITION%d;\n", $1);
+		printf("}\n");
 	}
 	')'
 	{
