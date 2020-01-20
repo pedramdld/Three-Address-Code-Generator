@@ -5,7 +5,7 @@
 	#include<string.h>
 	#include<ctype.h>
 
-    extern char yyval;
+    // extern char yyval;
 
 	void yyerror(char*);
 %}

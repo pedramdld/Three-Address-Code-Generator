@@ -20,7 +20,7 @@
 }
 
 
-/*KeywL_ords*/
+/*Keywords*/
 %token INT DOUBLE					//token for Type decleration
 %token <lableIndex> WHILE FOR IF	//statment
 %token <str> LT LTE GT GTE EQ NEQ	//Tokens for Relational Operators
@@ -61,7 +61,7 @@ Program:
 	;
 
 Block: 
-	{printf("{\n");}'{' Stmts '}'     {printf(";\n}\n");}
+	'{' {printf("{\n");} Stmts '}'     {printf(";\n}\n");}
 	;
 
 Stmts:
@@ -172,8 +172,8 @@ Decl:
 	;
 
 Ids:    
-	Ids ',' ID				{sprintf($$, "%s, %s", $$, $3);} 
-	|Ids ',' ID '=' Expr	{sprintf($$, "%s, %s = %s", $$, $3, $5);}
+	Ids ',' ID				{sprintf($$, "%s, %s", $1, $3);} 
+	|Ids ',' ID '=' Expr	{sprintf($$, "%s, %s = %s", $1, $3, $5);}
 	|ID						{sprintf($$, "%s",$1);}
 	|ID '=' Expr			{sprintf($$, "%s = %s", $1, $3);}
 	;
@@ -181,6 +181,7 @@ Ids:
 Expr:
 	ID '=' Expr 	{strcpy($$, $3); printf("%s = %s;\n", $1, $3);}
 	|Term			{strcpy($$, $1);}
+	|%empty			{;}
 	;
 
 Term:
